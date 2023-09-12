@@ -67,7 +67,7 @@ def productListing(envir):
         website="https://www.amazon.in/Redmi-Storage-Powerful-Processor-Warranty/dp/B0C46KPXCM/ref=sr_1_5?crid=CF0RKQE51DB0&keywords=mobiles&qid=1694456523&sprefix=mobile%2Caps%2C211&sr=8-5&th=1"
         chrome_options = Options()
         chrome_options.add_argument("--incognito")
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-gpu")
         # Create WebDriver instance with ChromeOptions
         driver = webdriver.Chrome(options=chrome_options)     
@@ -184,6 +184,10 @@ def productListing(envir):
 
         userList=list()
         while( True):
+            if(driver.find_elements(By.XPATH,'//*[@id="cm_cr-review_list"]/div[12]/div/a')):
+                print("\nAbout to break ")
+                time.sleep(10)
+                break
             #user name
             userNames=driver.find_elements(By.CLASS_NAME,"a-profile-name")
             for userName in userNames:
@@ -248,9 +252,7 @@ def productListing(envir):
                 for data_row in zip(userList,ratingsList,summary,datesByReview,commentsByReview):
                     csv_writer.writerow(data_row)
                 
-            if(driver.find_elements(By.XPATH,'//*[@id="cm_cr-review_list"]/div[12]/div/a')):
-                print("\nAbout to break ")
-                time.sleep(10)
+            
                 # driver.back()
             # driver.get(dropDownPage)
             # dropDown.click()
