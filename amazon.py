@@ -68,7 +68,7 @@ def productListing(envir):
         chrome_options = Options()
         chrome_options.add_argument("--incognito")
         # chrome_options.add_argument("--headless")
-        # chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--disable-gpu")
         # Create WebDriver instance with ChromeOptions
         driver = webdriver.Chrome(options=chrome_options)     
         driver.get(website)
@@ -81,10 +81,10 @@ def productListing(envir):
         title =element.text
         print("title:",title)
 
-        #getting the brand
-        element1=driver.find_element(By.XPATH,'//*[@id="bylineInfo"]')
-        brandName=element1.text
-        print("brandName",brandName)
+        # #getting the brand
+        # element1=driver.find_element(By.XPATH,'//*[@id="bylineInfo"]')
+        # brandName=element1.text
+        # print("brandName",brandName)
 
         #getting the overall rating
         overallRating=driver.find_element(By.XPATH,'//*[@id="acrPopover"]/span[1]/a/span')
@@ -98,10 +98,10 @@ def productListing(envir):
         
         print("numberOfRating",numberOfRating)
 
-        #getting the price
-        Price=driver.find_element(By.XPATH,'//*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[3]/span[2]/span[2]')
-        Price=Price.text
-        print("Price",Price)
+        # #getting the price
+        # Price=driver.find_element(By.XPATH,'//*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[3]/span[2]/span[2]')
+        # Price=Price.text
+        # print("Price",Price)
 
         #getting percentages 
         five_star_count = four_star_count = three_star_count = two_star_count = one_star_count = 0
@@ -183,7 +183,7 @@ def productListing(envir):
             print("Value not found in the text.")
 
         userList=list()
-        while( not(driver.find_element(By.XPATH,'//*[@id="cm_cr-review_list"]/div[12]/div/a'))):
+        while( True):
             #user name
             userNames=driver.find_elements(By.CLASS_NAME,"a-profile-name")
             for userName in userNames:
@@ -248,12 +248,12 @@ def productListing(envir):
                 for data_row in zip(userList,ratingsList,summary,datesByReview,commentsByReview):
                     csv_writer.writerow(data_row)
                 
-            # if(driver.find_elements(By.XPATH,'//*[@id="cm_cr-review_list"]/div[12]/div/a')):
-            #     print("\nAbout to break ")
-            #     time.sleep(10)
-            #     driver.back()
-            driver.get(dropDownPage)
-            dropDown.click()
+            if(driver.find_elements(By.XPATH,'//*[@id="cm_cr-review_list"]/div[12]/div/a')):
+                print("\nAbout to break ")
+                time.sleep(10)
+                # driver.back()
+            # driver.get(dropDownPage)
+            # dropDown.click()
 
 
 
