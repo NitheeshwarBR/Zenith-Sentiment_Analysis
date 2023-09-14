@@ -13,23 +13,24 @@ import regex as re
 from datetime import datetime
 import csv
 
-def facebookComments(envir):
+def facebookComments(link,envir):
     if envir=="uat":
         CALLBACK_URL = os.environ.get("CALLBACKURL")
 
         logging.basicConfig(level=logging.INFO,filename="log.log",filemode="w",format="%(asctime)s  -  %(levelname)s   -   %(message)s")
 
        
-        website="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FDishaPatani%2Fposts%2Fpfbid02FXLWEEbwTQ4XgKahETpyS9hDFHdwXziUdBwEee7R1WmCioCbjLV9JXwvUpZWL7Anl&show_text=true&width=500"
+        # website="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid034U4BEygEMb52mio1z91BJ97Gd94Ju8LY3j1nKSRWGMjHaScovwZ6jqhq4afM9TELl%26id%3D61550896213623&show_text=true&width=500"
         chrome_options = Options()
         chrome_options.add_argument("--incognito")
         # chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--disable-gpu")
+        # chrome_options.add_argument("--disable-gpu")
         # Create WebDriver instance with ChromeOptions
         driver = webdriver.Chrome(options=chrome_options)     
-        driver.get(website)
+        driver.get(link)
         #sleep after loading website 
         time.sleep(5)
+        logging.info("website loaded")
 
         #click on comments
         element = driver.find_element(By.CLASS_NAME,'_29bd')
@@ -69,4 +70,4 @@ def facebookComments(envir):
                 Comment_list.append("".join(lines[1:]))
                 userList.append(lines[0])
 
-facebookComments("uat")
+facebookComments("https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid034U4BEygEMb52mio1z91BJ97Gd94Ju8LY3j1nKSRWGMjHaScovwZ6jqhq4afM9TELl%26id%3D61550896213623&show_text=true&width=500","uat")
