@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <!-- Link to Bootstrap CSS (you can replace with your preferred Bootstrap version) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Link to your custom CSS (if any) -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+                background-color: black; /* Set background color to black */
+            }
+    
+            #matrix-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1; /* Place it behind the content */
+            }
+        </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand"><b>Sentiment Analysis For Social Media</b></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><b>Home</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><b>About</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><b>Contact</b></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- ... (Your existing navbar code) -->
+
+    <!-- Main content -->
+    <div class="container mt-5">
+        <!-- ... (Your existing upload form) -->
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title"><b>Upload Link</b></h2>
+                            <form id="uploadForm">
+                                <div class="form-group">
+                                    <label for="linkInput"><b>Link</b></label>
+                                    <input type="text" class="form-control" id="linkInput" placeholder="Enter a link">
+                                </div>
+                                <button type="submit" class="btn btn-primary"><b>Submit</b></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="row mt-5 justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title"><b>Output</b></h2>
+                        <div id="outputBox">
+                            <!-- Output content will be displayed here -->
+                            <p><b>Sentiment Analysis Result: <span id="sentimentResult">Positive</span></b></p>
+                            <a href="#" id="downloadLink" download="sentiment.txt"><b>Download</b></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS scripts (include at the end of the body for performance) -->
+    <!-- ... (Your existing Bootstrap script links) -->
+
+    <!-- Your JavaScript code -->
+    <script>
+        // Placeholder sentiment analysis result (replace with your logic)
+        var sentimentAnalysisResult = "Positive";
+
+        // Set the sentiment analysis result in the output box
+        var sentimentResultElement = document.getElementById("sentimentResult");
+        sentimentResultElement.textContent = sentimentAnalysisResult;
+
+        // Create a text file with the sentiment analysis result for download
+        var downloadLink = document.getElementById("downloadLink");
+        downloadLink.href = "data:text/plain;charset=utf-8," + encodeURIComponent(sentimentAnalysisResult);
+    </script>
+    <div id="matrix-container">
+        <canvas id="c"></canvas>
+    </div>
+<script>
+    // geting canvas by Boujjou Achraf
+    var c = document.getElementById("c");
+        var ctx = c.getContext("2d");
+
+        //making the canvas full screen
+        c.height = window.innerHeight;
+        c.width = window.innerWidth;
+
+        //chinese characters - taken from the unicode charset
+        var matrix = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+        //converting the string into an array of single characters
+        matrix = matrix.split("");
+
+        var font_size = 10;
+        var columns = c.width/font_size; //number of columns for the rain
+        //an array of drops - one per column
+        var drops = [];
+        //x below is the x coordinate
+        //1 = y co-ordinate of the drop(same for every drop initially)
+        for(var x = 0; x < columns; x++)
+            drops[x] = 1; 
+
+        //drawing the characters
+        function draw()
+        {
+            //Black BG for the canvas
+            //translucent BG to show trail
+            ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+            ctx.fillRect(0, 0, c.width, c.height);
+
+            ctx.fillStyle = "#f4427d";//green text
+            ctx.font = font_size + "px arial";
+            //looping over drops
+            for(var i = 0; i < drops.length; i++)
+            {
+                //a random chinese character to print
+                var text = matrix[Math.floor(Math.random()*matrix.length)];
+                //x = i*font_size, y = value of drops[i]*font_size
+                ctx.fillText(text, i*font_size, drops[i]*font_size);
+
+                //sending the drop back to the top randomly after it has crossed the screen
+                //adding a randomness to the reset to make the drops scattered on the Y axis
+                if(drops[i]*font_size > c.height && Math.random() > 0.975)
+                    drops[i] = 0;
+
+                //incrementing Y coordinate
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 35);
+
+</script>
+</body>
+</html>
