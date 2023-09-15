@@ -14,7 +14,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 # Serve static files from the "static" directory
 
-mod=importlib.import_module("facebook")
+mod=importlib.import_module("threads")
 analytics=[]
 app=FastAPI()
 
@@ -31,12 +31,14 @@ async def root(request:Request):
 async def processed_data(data: Data):
     if data is None or (data.link is None and data.data is None):
         return JSONResponse(content={"error_message": "Pass the required values"}, status_code=400)
-    
-    if data.link is not None:
-        # Use data.link for processing
-        response = await mod.facebookComments(data.link, "uat")
-    for i in response:
-        sentiments = sentiment_analysis(i)
-        analytics.append({"comments": i, "negative": sentiments[0], "neutral": sentiments[1], "positive": sentiments[2]})
-        print(analytics)
-    return {"results": analytics}
+    if(data.link==None):
+        response=data.data
+    else:   
+        response=await mod.Comments(data.link,"uat")
+    max_res={0:0,1:0,2:0}
+    for i in response[0:10]:
+        sentiments=sentiment_analysis(i)
+        max_res[sentiments.index(max(sentiments))]+=1
+        print(sentiments)
+
+    return JSONResponse(content={"negative":max_res[0],"neutral":max_res[1],"positive":max_res[2]}, status_code=200)
