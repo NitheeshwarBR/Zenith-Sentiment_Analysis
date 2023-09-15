@@ -1,3 +1,4 @@
+
 from selenium import webdriver
 import time 
 from selenium.webdriver.common.by import By
@@ -13,7 +14,8 @@ import regex as re
 from datetime import datetime
 import csv
 
-def facebookComments(link,envir):
+
+async def facebookComments(link,envir):
     if envir=="uat":
         CALLBACK_URL = os.environ.get("CALLBACKURL")
 
@@ -23,7 +25,7 @@ def facebookComments(link,envir):
         # website="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid034U4BEygEMb52mio1z91BJ97Gd94Ju8LY3j1nKSRWGMjHaScovwZ6jqhq4afM9TELl%26id%3D61550896213623&show_text=true&width=500"
         chrome_options = Options()
         chrome_options.add_argument("--incognito")
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         # chrome_options.add_argument("--disable-gpu")
         # Create WebDriver instance with ChromeOptions
         driver = webdriver.Chrome(options=chrome_options)     
@@ -42,9 +44,7 @@ def facebookComments(link,envir):
         Comment_list=[]
         comments= driver.find_elements(By.CLASS_NAME,'x1y1aw1k')
 
-
         for element in comments :
-
             # print("\ntext:",element.text,":")
             text = str(element.text.strip())
             pattern= r"Top fan"
@@ -52,8 +52,6 @@ def facebookComments(link,envir):
             modified_string=str()
             if match:
                 end_index = match.end()
-                
-         
                 modified_string =text[end_index:]
                 lines=modified_string.strip().splitlines()
         
@@ -69,5 +67,7 @@ def facebookComments(link,envir):
                     continue
                 Comment_list.append("".join(lines[1:]))
                 userList.append(lines[0])
+    return Comment_list
 
-facebookComments("https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid034U4BEygEMb52mio1z91BJ97Gd94Ju8LY3j1nKSRWGMjHaScovwZ6jqhq4afM9TELl%26id%3D61550896213623&show_text=true&width=500","uat")
+
+
