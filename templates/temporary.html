@@ -88,7 +88,7 @@
                             <h2 class="card-title"><b>Output</b></h2>
                             <div id="outputBox">
                                 <!-- Output content will be displayed here -->
-                                <p><b>Sentiment Analysis Result: <span id="sentimentResult"></span>{{result}}</b></p>
+                                <p><b>Sentiment Analysis Result: <span id="sentimentResult"></span></b></p>
                                 <a href="#" id="downloadLink" download="sentiment.txt"><b>Download</b></a>
                             </div>
                         </div>
@@ -119,8 +119,8 @@
                     })
                 });
 
-                const result = await response;
-                console.log(result)
+                const sentimentResultElement = document.getElementById("sentimentResult");
+                sentimentResultElement.innerText = `Negative: ${result.negative}, Neutral: ${result.neutral}, Positive: ${result.positive}`
             })
             // Create a text file with the sentiment analysis result for download
             var downloadLink = document.getElementById("downloadLink");
