@@ -7,7 +7,7 @@
     <!-- Link to Bootstrap CSS (you can replace with your preferred Bootstrap version) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Link to your custom CSS (if any) -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./styles.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
@@ -66,7 +66,7 @@
                             <form id="uploadForm">
                                 <div class="form-group">
                                     <label for="linkInput"><b>Link</b></label>
-                                    <input type="text" class="form-control" id="linkInput" placeholder="Enter a link">
+                                    <input type="text" class="form-control" id="linkInput" name="inputlink" placeholder="Enter a link">
                                 </div>
                                 <button type="submit" class="btn btn-primary"><b>Submit</b></button>
                             </form>
@@ -82,7 +82,7 @@
                         <h2 class="card-title"><b>Output</b></h2>
                         <div id="outputBox">
                             <!-- Output content will be displayed here -->
-                            <p><b>Sentiment Analysis Result: <span id="sentimentResult">Positive</span></b></p>
+                            <p><b>Sentiment Analysis Result: <span id="sentimentResult">{{result}}</span></b></p>
                             <a href="#" id="downloadLink" download="sentiment.txt"><b>Download</b></a>
                         </div>
                     </div>
