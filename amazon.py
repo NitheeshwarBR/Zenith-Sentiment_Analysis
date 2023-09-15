@@ -14,13 +14,13 @@ from datetime import datetime
 import csv
 
 # Sample date text
-date_texts = [
-    "Reviewed in India on 23 August 2023",
-    "Reviewed in India on 1 September 2023",
-    "Reviewed in India on 17 July 2023",
-    "Reviewed in India on 31 July 2023",
-    "Reviewed in India on 29 June 2023",
-]
+# date_texts = [
+#     "Reviewed in India on 23 August 2023",
+#     "Reviewed in India on 1 September 2023",
+#     "Reviewed in India on 17 July 2023",
+#     "Reviewed in India on 31 July 2023",
+#     "Reviewed in India on 29 June 2023",
+# ]
 
 # Define a mapping of month names to their numerical representations
 month_mapping = {
@@ -56,7 +56,7 @@ def convert_date_text(date_text):
 load_dotenv()
 
 
-def productListing(envir):
+def productListing(link,envir):
     if envir=="uat":
         CALLBACK_URL = os.environ.get("CALLBACKURL")
         # print(CALLBACK_URL)
@@ -64,22 +64,22 @@ def productListing(envir):
         logging.basicConfig(level=logging.INFO,filename="log.log",filemode="w",format="%(asctime)s  -  %(levelname)s   -   %(message)s")
 
         # website ="https://www.amazon.in/Motorola-Aurora-Green-128GB-Storage/dp/B0CGJBFWN3/ref=sr_1_3?crid=CF0RKQE51DB0&keywords=mobiles&qid=1694369926&sprefix=mobile%2Caps%2C211&sr=8-3"
-        website="https://www.amazon.in/Redmi-Storage-Powerful-Processor-Warranty/dp/B0C46KPXCM/ref=sr_1_5?crid=CF0RKQE51DB0&keywords=mobiles&qid=1694456523&sprefix=mobile%2Caps%2C211&sr=8-5&th=1"
+        # website="https://www.amazon.in/Redmi-Storage-Powerful-Processor-Warranty/dp/B0C46KPXCM/ref=sr_1_5?crid=CF0RKQE51DB0&keywords=mobiles&qid=1694456523&sprefix=mobile%2Caps%2C211&sr=8-5&th=1"
         chrome_options = Options()
         chrome_options.add_argument("--incognito")
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-gpu")
         # Create WebDriver instance with ChromeOptions
         driver = webdriver.Chrome(options=chrome_options)     
-        driver.get(website)
+        driver.get(link)
         #sleep after loading website 
         time.sleep(5)
         logging.info("website loaded")
 
         #getting the title 
-        element = driver.find_element(By.XPATH,'//*[@id="productTitle"]')
-        title =element.text
-        print("title:",title)
+        # element = driver.find_element(By.XPATH,'//*[@id="productTitle"]')
+        # title =element.text
+        # print("title:",title)
 
         # #getting the brand
         # element1=driver.find_element(By.XPATH,'//*[@id="bylineInfo"]')
@@ -87,16 +87,16 @@ def productListing(envir):
         # print("brandName",brandName)
 
         #getting the overall rating
-        overallRating=driver.find_element(By.XPATH,'//*[@id="acrPopover"]/span[1]/a/span')
-        overallRating=overallRating.text
-        print("overallRating",overallRating)
+        # overallRating=driver.find_element(By.XPATH,'//*[@id="acrPopover"]/span[1]/a/span')
+        # overallRating=overallRating.text
+        # print("overallRating",overallRating)
 
         #getting the number of ratings 
-        numberOfRating=driver.find_element(By.XPATH,'//*[@id="acrCustomerReviewText"]')
-        numberOfRating=numberOfRating.text.strip().split()[0]
-        numberOfRating=int(numberOfRating.replace(",",""))
+        # numberOfRating=driver.find_element(By.XPATH,'//*[@id="acrCustomerReviewText"]')
+        # numberOfRating=numberOfRating.text.strip().split()[0]
+        # numberOfRating=int(numberOfRating.replace(",",""))
         
-        print("numberOfRating",numberOfRating)
+        # print("numberOfRating",numberOfRating)
 
         # #getting the price
         # Price=driver.find_element(By.XPATH,'//*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[3]/span[2]/span[2]')
@@ -104,47 +104,47 @@ def productListing(envir):
         # print("Price",Price)
 
         #getting percentages 
-        five_star_count = four_star_count = three_star_count = two_star_count = one_star_count = 0
-        tags=driver.find_elements(By.CLASS_NAME,"a-link-normal")
-        percentages=list()
-        # print(tags)
-        for tag in tags:
-            try:
-                # title=tag.get_attribute('title')
-                textInside=tag.text
-                pattern=r"^\d+%$"
-                text=textInside.strip()
-                # print(textInside)
-                if(re.search(pattern,text)):
-                    percentages.append(text)
-                # print("try done")
-            except:
-                print("could not find title")
-                continue
-        print(percentages)
-        i=0
-        for percent in percentages:
-                percentage = int(percent.strip('%'))
-                if i==0:
-                    five_star_count = (percentage / 100) * numberOfRating
-                elif i==1:
-                    four_star_count = (percentage / 100) * numberOfRating
-                elif i==2:
-                    three_star_count = (percentage / 100) * numberOfRating
-                elif i==3:
-                    two_star_count = (percentage / 100) * numberOfRating
-                elif i==4:
-                    one_star_count = (percentage / 100) * numberOfRating
-                i+=1
+        # five_star_count = four_star_count = three_star_count = two_star_count = one_star_count = 0
+        # tags=driver.find_elements(By.CLASS_NAME,"a-link-normal")
+        # percentages=list()
+        # # print(tags)
+        # for tag in tags:
+        #     try:
+        #         # title=tag.get_attribute('title')
+        #         textInside=tag.text
+        #         pattern=r"^\d+%$"
+        #         text=textInside.strip()
+        #         # print(textInside)
+        #         if(re.search(pattern,text)):
+        #             percentages.append(text)
+        #         # print("try done")
+        #     except:
+        #         print("could not find title")
+        #         continue
+        # print(percentages)
+        # i=0
+        # for percent in percentages:
+        #         percentage = int(percent.strip('%'))
+        #         if i==0:
+        #             five_star_count = (percentage / 100) * numberOfRating
+        #         elif i==1:
+        #             four_star_count = (percentage / 100) * numberOfRating
+        #         elif i==2:
+        #             three_star_count = (percentage / 100) * numberOfRating
+        #         elif i==3:
+        #             two_star_count = (percentage / 100) * numberOfRating
+        #         elif i==4:
+        #             one_star_count = (percentage / 100) * numberOfRating
+        #         i+=1
 
         
 
-        # Print the calculated counts
-        print("Number of 5-star ratings:", int(five_star_count))
-        print("Number of 4-star ratings:", int(four_star_count))
-        print("Number of 3-star ratings:", int(three_star_count))
-        print("Number of 2-star ratings:", int(two_star_count))
-        print("Number of 1-star ratings:", int(one_star_count))
+        # # Print the calculated counts
+        # print("Number of 5-star ratings:", int(five_star_count))
+        # print("Number of 4-star ratings:", int(four_star_count))
+        # print("Number of 3-star ratings:", int(three_star_count))
+        # print("Number of 2-star ratings:", int(two_star_count))
+        # print("Number of 1-star ratings:", int(one_star_count))
 
         #going to more reviews link 
         moreReviews=driver.find_element(By.XPATH,'//*[@id="reviews-medley-footer"]/div[2]/a')
@@ -270,4 +270,4 @@ def productListing(envir):
 
 
         
-productListing("uat")
+productListing("https://www.amazon.in/Redmi-Storage-Powerful-Processor-Warranty/dp/B0C46KPXCM/ref=sr_1_5?crid=CF0RKQE51DB0&keywords=mobiles&qid=1694456523&sprefix=mobile%2Caps%2C211&sr=8-5&th=1","uat")
