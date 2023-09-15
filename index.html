@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <!-- Link to Bootstrap CSS (you can replace with your preferred Bootstrap version) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Link to your custom CSS (if any) -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black; /* Set background color to black */
+        }
+        .joy { background:linear-gradient(45deg, #ffef5e, #fcd200) }
+        .love { background:linear-gradient(45deg, #ff0099, #ff0044) }
+        .anger { background:linear-gradient(45deg, #fc0b0b, #ff5e08) }
+        .sadness { background: linear-gradient(45deg, #0585d4, #0212bc) }
+        .fear { background: linear-gradient(45deg, #60cd06, #03c54e) }
+        .surprise { background: linear-gradient(45deg, #a93abd, #7f09d4); }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand"><b>Sentiment Analysis For Social Media</b></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><b>Home</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><b>About</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><b>Contact</b></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Main content -->
+    <div class="container mt-5">
+        <!-- Your existing upload form -->
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title"><b>Upload Link</b></h2>
+                            <form id="uploadForm">
+                                <div class="form-group">
+                                    <label for="linkInput"><b>Link</b></label>
+                                    <input type="text" class="form-control" id="linkInput" placeholder="Enter a link">
+                                </div>
+                                <button type="submit" class="btn btn-primary"><b>Submit</b></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title"><b>Output</b></h2>
+                        <div id="outputBox">
+                            <!-- Output content will be displayed here -->
+                            <p><b>Sentiment Analysis Result: <span id="sentimentResult">Loading...</span></b></p>
+                            <p><b>Numerical Value: <span id="sentimentValue">Loading...</span></b></p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><b>Download</b></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS scripts (include at the end of the body for performance) -->
+    <!-- ... (Your existing Bootstrap script links) -->
+
+    <!-- Your JavaScript code -->
+    <script>
+        // Function to fetch and process data from data.json
+        function fetchData() {
+            // Assuming data.json is in the same folder as this HTML file
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        const analytics = data[0].analytics;
+                        if (analytics && analytics.length === 3) {
+                            // Determine sentiment based on the largest value in the "analytics" array
+                            const maxIndex = analytics.indexOf(Math.max(...analytics));
+                            let sentimentResult;
+                            let sentimentValue;
+
+                            // Determine sentiment and numerical value
+                            switch (maxIndex) {
+                                case 0:
+                                    sentimentResult = 'Negative';
+                                    sentimentValue = analytics[0];
+                                    break;
+                                case 1:
+                                    sentimentResult = 'Neutral';
+                                    sentimentValue = analytics[1];
+                                    break;
+                                case 2:
+                                    sentimentResult = 'Positive';
+                                    sentimentValue = analytics[2];
+                                    break;
+                                default:
+                                    sentimentResult = 'Unknown';
+                                    sentimentValue = 0;
+                            }
+
+                            // Update the "Sentiment Analysis Result" and numerical value in the output box
+                            const sentimentResultElement = document.getElementById('sentimentResult');
+                            sentimentResultElement.textContent = sentimentResult;
+                            const sentimentValueElement = document.getElementById('sentimentValue');
+                            sentimentValueElement.textContent = sentimentValue.toFixed(2); // Displaying with two decimal places
+                        }
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Call the fetchData function to load and process the data
+        fetchData();
+    </script>
+
+    <!-- Your matrix animation code -->
+    <!-- ... (Your existing matrix animation code) -->
+</body>
+</html>
