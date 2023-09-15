@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import importlib
 from sentiment_analyzer import sentiment_analysis
 
-mod=importlib.import_module("facebook")
+mod=importlib.import_module("threads")
 analytics=[]
 app=FastAPI()
 
@@ -20,8 +20,11 @@ async def root(data: Data=None):
     if(data.link==None):
         response=data.data
     else:   
-        response=await mod.facebookComments(data.link,"uat")
-    for i in response:
+        response=await mod.Comments(data.link,"uat")
+    max_res={0:0,1:0,2:0}
+    for i in response[0:10]:
         sentiments=sentiment_analysis(i)
-        analytics.append({"comments":i,"negative":sentiments[0],"neutral":sentiments[1],"positive":sentiments[2]})
-    return JSONResponse(content=analytics, status_code=200)
+        max_res[sentiments.index(max(sentiments))]+=1
+        print(sentiments)
+
+    return JSONResponse(content={"negative":max_res[0],"neutral":max_res[1],"positive":max_res[2]}, status_code=200)
