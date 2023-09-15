@@ -26,7 +26,7 @@ async def facebookComments(link,envir):
         chrome_options = Options()
         chrome_options.add_argument("--incognito")
         chrome_options.add_argument("--headless")
-        # chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--disable-gpu")
         # Create WebDriver instance with ChromeOptions
         driver = webdriver.Chrome(options=chrome_options)     
         driver.get(link)
@@ -66,7 +66,7 @@ async def facebookComments(link,envir):
                 if(len(lines)<2):
                     continue
                 Comment_list.append("".join(lines[1:]))
-                userList.append(lines[0])
+                # userList.append(lines[0])
     return Comment_list
 
 

@@ -22,5 +22,6 @@ async def root(data: Data=None):
     else:   
         response=await mod.facebookComments(data.link,"uat")
     for i in response:
-        analytics.append({"comments":i,"analytics":sentiment_analysis(i)})
+        sentiments=sentiment_analysis(i)
+        analytics.append({"comments":i,"negative":sentiments[0],"neutral":sentiments[1],"positive":sentiments[2]})
     return JSONResponse(content=analytics, status_code=200)
