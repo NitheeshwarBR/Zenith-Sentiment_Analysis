@@ -15,7 +15,7 @@ import regex as re
 # import csv
 
 
-async def facebookComments(link,envir):
+async def Comments(link,envir):
     if envir=="uat":
         # CALLBACK_URL = os.environ.get("CALLBACKURL")
 

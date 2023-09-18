@@ -13,8 +13,26 @@ templates = Jinja2Templates(directory="templates")
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 # Serve static files from the "static" directory
+import re
 
-mod=importlib.import_module("threads")
+def ind(url):
+    list1 = [r"www.threads.net", r"www.facebook.com", r"www.youtube.com", r"www.amazon.in"]
+    option=1
+    for domain in list1:
+        result = re.search(domain, url)
+        if result:
+            option=list1.index(domain)
+    if option == 0:
+       return importlib.import_module("threads")
+    elif option == 1:
+        return importlib.import_module("facebook")
+    elif option == 2:
+        return importlib.import_module("youtube")
+    elif option==3:
+        return importlib.import_module("amazon")
+    
+
+
 analytics=[]
 app=FastAPI()
 
@@ -24,7 +42,7 @@ class Data(BaseModel):
 
 @app.get("/")
 async def root(request:Request):
-    return templates.TemplateResponse('temporary.html',{"request":request})
+    return templates.TemplateResponse('temporary.html',{"request":request,"id":1,})
 
 
 @app.post("/output")
@@ -34,6 +52,8 @@ async def processed_data(data: Data):
     if(data.link==None):
         response=data.data
     else:   
+        mod=ind(data.link)
+        print(mod.__name__)
         response=await mod.Comments(data.link,"uat")
     max_res={0:0,1:0,2:0}
     for i in response[0:10]:

@@ -67,7 +67,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="card-title"><b>Upload Link</b></h2>
+                            <h2 class="card-title"><b>Upload Link: </b></h2>
                             <form action="/output" method="POST" id="outputForm">
                                 <div class="form-group">
                                     <label for="linkInput"><b>Link</b></label>
@@ -108,16 +108,17 @@
 
                 // Placeholder sentiment analysis result (replace with your logic)
                 const link = document.getElementById("linkInput").value;
-
+                document.getElementById("sentimentResult").innerHTML="<img src='https://th.bing.com/th/id/R.a463df1f4698fc59c7361cc89efe995c?rik=0tUGCJ%2bOuGIp8Q&pid=ImgRaw&r=0' width='20px' height='20px'>"
                 const response = await fetch("/output", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        "link": link
+                        "link": link,
                     })
                 });
+                const result=await response.json()
 
                 const sentimentResultElement = document.getElementById("sentimentResult");
                 sentimentResultElement.innerText = `Negative: ${result.negative}, Neutral: ${result.neutral}, Positive: ${result.positive}`

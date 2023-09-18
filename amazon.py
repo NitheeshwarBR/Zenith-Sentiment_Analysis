@@ -56,7 +56,7 @@ from selenium.webdriver.chrome.options import Options
 # load_dotenv()
 
 
-def Comments(link,envir):
+async def Comments(link,envir):
     if envir=="uat":
         # CALLBACK_URL = os.environ.get("CALLBACKURL")
         # print(CALLBACK_URL)
@@ -270,4 +270,4 @@ def Comments(link,envir):
 
 
         
-Comments("https://www.amazon.in/Redmi-Storage-Powerful-Processor-Warranty/dp/B0C46KPXCM/ref=sr_1_5?crid=CF0RKQE51DB0&keywords=mobiles&qid=1694456523&sprefix=mobile%2Caps%2C211&sr=8-5&th=1","uat")
+# Comments("https://www.amazon.in/Redmi-Storage-Powerful-Processor-Warranty/dp/B0C46KPXCM/ref=sr_1_5?crid=CF0RKQE51DB0&keywords=mobiles&qid=1694456523&sprefix=mobile%2Caps%2C211&sr=8-5&th=1","uat")
