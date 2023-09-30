@@ -26,7 +26,7 @@ conda-content-trust
 conda-package-handling
 conda_package_streaming
 configobj==5.0.8
-contourpy==1.0.7
+# contourpy==1.0.7
 cryptography
 cycler==0.11.0
 debugpy==1.6.6
