@@ -28,7 +28,7 @@ async def Comments(link,envir):
         chrome_options.add_argument("--disable-gpu")
         # Create WebDriver instance with ChromeOptions
         driver = webdriver.Chrome(options=chrome_options)     
-        driver.get(link)
+        await driver.get(link)
         #sleep after loading website 
         # time.sleep(5)
         # logging.info("website loaded")
@@ -41,7 +41,7 @@ async def Comments(link,envir):
         #     # print("title:",title)
         # # print(userNames[:5])
         commentElement=[]
-        element = driver.find_elements(By.CSS_SELECTOR,'span.x1lliihq.x1plvlek.xryxfnj.x1n2onr6.x193iq5w.xeuugli.x1fj9vlw.x13faqbe.x1vvkbs.x1s928wv.xhkezso.x1gmr53x.x1cpjm7i.x1fgarty.x1943h6x.x1i0vuye.xjohtrz.xo1l8bm.xp07o12.xat24cr.xdj266r')
+        element = await  driver.find_elements(By.CSS_SELECTOR,'span.x1lliihq.x1plvlek.xryxfnj.x1n2onr6.x193iq5w.xeuugli.x1fj9vlw.x13faqbe.x1vvkbs.x1s928wv.xhkezso.x1gmr53x.x1cpjm7i.x1fgarty.x1943h6x.x1i0vuye.xjohtrz.xo1l8bm.xp07o12.xat24cr.xdj266r')
         # print(element)
         for i in element:
             title =i.text

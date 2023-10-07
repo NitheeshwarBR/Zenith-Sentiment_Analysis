@@ -35,14 +35,14 @@ async def Comments(link,envir):
         # logging.info("website loaded")
 
         #click on comments
-        element = driver.find_element(By.CLASS_NAME,'_29bd')
+        element =await  driver.find_element(By.CLASS_NAME,'_29bd')
         href_value = element.get_attribute('href')
         driver.get(href_value)
         # time.sleep(5)
         
         # userList=[]
         Comment_list=[]
-        comments= driver.find_elements(By.CLASS_NAME,'x1y1aw1k')
+        comments= await driver.find_elements(By.CLASS_NAME,'x1y1aw1k')
 
         for element in comments :
             # print("\ntext:",element.text,":")
