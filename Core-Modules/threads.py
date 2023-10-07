@@ -24,7 +24,7 @@ async def Comments(link,envir):
         # website="https://www.threads.net/@ishansharma7390/post/CwDhaXevirT"
         chrome_options = Options()
         chrome_options.add_argument("--incognito")
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-gpu")
         # Create WebDriver instance with ChromeOptions
         driver = webdriver.Chrome(options=chrome_options)     
