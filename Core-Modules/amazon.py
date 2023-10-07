@@ -147,7 +147,7 @@ async def Comments(link,envir):
         # print("Number of 1-star ratings:", int(one_star_count))
 
         #going to more reviews link 
-        moreReviews=await driver.find_element(By.XPATH,'//*[@id="reviews-medley-footer"]/div[2]/a', '_29bd')
+        moreReviews= driver.find_element(By.XPATH,'//*[@id="reviews-medley-footer"]/div[2]/a')
         
 
         
@@ -158,10 +158,10 @@ async def Comments(link,envir):
 
         #filter 5 star etc
         # dropDownPage=driver.current_url
-        dropDown=await driver.find_element(By.XPATH,'//*[@id="a-autoid-5-announce"]' , '_29bd')
+        dropDown=driver.find_element(By.XPATH,'//*[@id="a-autoid-5-announce"]' )
         dropDown.click()
 
-        dropDownElements=await driver.find_element(By.ID,"star-count-dropdown_0" , '_29bd')
+        dropDownElements=driver.find_element(By.ID,"star-count-dropdown_0" )
     
         #click each element 
         dropDownElements.click()
@@ -209,7 +209,7 @@ async def Comments(link,envir):
 
             #extracting summary 
         summary=[]
-        summarys=await driver.find_elements(By.XPATH,'//*[@class="a-section review aok-relative"]/div/div/div[2]/a/span[2]', '_29bd')
+        summarys=driver.find_elements(By.XPATH,'//*[@class="a-section review aok-relative"]/div/div/div[2]/a/span[2]')
         # summarySpan=summary.get_attribute('outerHTML')
         for i in summarys:
             summary.append(i.text)

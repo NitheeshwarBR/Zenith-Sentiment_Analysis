@@ -20,18 +20,18 @@ async def Comments(link,envir):
         driver = webdriver.Chrome(options=chrome_options)
 
         # Open the YouTube video page in the incognito tab
-        await driver.get(youtube_link)
+        driver.get(youtube_link)
 
         # Scroll down to load more comments (adjust the number of scrolls as needed)
         num_scrolls = 10
         for _ in range(num_scrolls):
-            await driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight);")
+            driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight);")
             time.sleep(2)
 
         # Find the comment elements
         comments=list()
         # userNames=list()
-        comment_elements = await driver.find_elements(By.ID, 'content-text')
+        comment_elements = driver.find_elements(By.ID, 'content-text')
         # user_elements = driver.find_elements(By.ID, 'author-text')
         # for i in user_elements:
         #     userNames.append(i.text)
