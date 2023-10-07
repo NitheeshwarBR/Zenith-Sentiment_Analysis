@@ -13,7 +13,7 @@ async def Comments(link,envir):
         # Set the options for the Chrome WebDriver to open an incognito window
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--incognito')
-        chrome_options.add_argument("--headless")
+        # chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-gpu")
 
         # Initialize the Selenium WebDriver for Chrome with incognito option
