@@ -2,7 +2,7 @@ from fastapi import FastAPI,Request,Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import importlib
-from sentiment_analyzer import sentiment_analysis
+from sentimentAnalysisModel.sentiment_analyzer import sentiment_analysis
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 from typing import List, Dict, Union
@@ -12,9 +12,7 @@ templates = Jinja2Templates(directory="templates")
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-# Serve static files from the "static" directory
 import re
-
 def ind(url):
     list1 = [r"www.threads.net", r"www.facebook.com", r"www.youtube.com", r"www.amazon.in"]
     option=1
@@ -23,13 +21,13 @@ def ind(url):
         if result:
             option=list1.index(domain)
     if option == 0:
-       return importlib.import_module("threads")
+       return importlib.import_module("Core-Modules.threads")
     elif option == 1:
-        return importlib.import_module("facebook")
+        return importlib.import_module("Core-Modules.facebook")
     elif option == 2:
-        return importlib.import_module("youtube")
+        return importlib.import_module("Core-Modules.youtube")
     elif option==3:
-        return importlib.import_module("amazon")
+        return importlib.import_module("Core-Modules.amazon")
     
 
 
